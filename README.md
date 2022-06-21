@@ -1,4 +1,4 @@
-# proposer-sdg-tool
+# problem-sensing-tool
 
 ## Project setup
 ```
