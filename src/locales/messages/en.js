@@ -18,5 +18,13 @@ export default {
     TITLE: "Insert your Sensed Problem",
     SUBTITLE: "Create a problem that you see...",
     SAVE: "Save problem"
+  },
+  problem: {
+    DESCRIPTION: "What problem do you see?*",
+    IMPORTANCE: "Why is solving this problem important to the mission of Project Catalyst?*",
+    GAP: "Can you articulate the gap between the current state of the problem and the expected or envisioned state?",
+    VALUE: "How might the value of solving this problem be quantified and/or measured?",
+    TAGS: "Choose your problem Tags:",
+    ATTACHMENTS: "Attachments/Links:"
   }
 }

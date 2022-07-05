@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersist from 'vuex-localstorage'
+// import sensedProblems from './modules/sensed'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ let localStorage = createPersist({
 
 export default new Vuex.Store({
   modules: {
+    // sensedProblems
   },
   strict: debug,
   plugins: [localStorage]

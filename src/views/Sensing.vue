@@ -7,34 +7,42 @@
           <div class="subtitle" v-html="$t('page.SUBTITLE')"></div>
         </div>
         <div class="inputs column is-12">
-          <b-field label="What problem do you see?*">
+          <b-field><template #label>{{$t('problem.DESCRIPTION')}}</template>
             <b-input 
+              type="textarea" 
+              v-model="debouncedDescription"
               maxlength="35" 
               placeholder="Insert your answer here">
             </b-input>
           </b-field>
-          <b-field label="Why is solving this problem important to the mission of Project Catalyst?*">
+          <b-field><template #label>{{$t('problem.IMPORTANCE')}}</template>
             <b-input 
+              type="textarea" 
+              v-model="debouncedImportance"
               maxlength="140" 
               placeholder="Insert your answer here">
             </b-input>
           </b-field>
-          <b-field label="Can you articulate the gap between the current state of the problem and the expected or envisioned state?">
+          <b-field><template #label>{{$t('problem.GAP')}}</template>
             <b-input 
+              type="textarea" 
+              v-model="debouncedGap"
               maxlength="250" 
               placeholder="Insert your answer here">
             </b-input>
           </b-field>
-          <b-field label="How might the value of solving this problem be quantified and/or measured?">
+          <b-field><template #label>{{$t('problem.VALUE')}}</template>
             <b-input 
+              type="textarea" 
+              v-model="debouncedValue"
               maxlength="250" 
               placeholder="Insert your answer here">
             </b-input>
           </b-field>
-          <b-field label="Tags">
+          <b-field><template #label>{{$t('problem.TAGS')}}</template>
             <b-taginput
                 ref="tagInput"
-                v-model="selectedTags"
+                v-model="input.selectedTags"
                 :data="filteredTags"
                 autocomplete
                 icon="label"
@@ -51,13 +59,16 @@
                 </template>
             </b-taginput>
           </b-field>
-          <b-field label="Attachments/Links">
+          <b-field><template #label>{{$t('problem.ATTACHMENTS')}}</template>
           </b-field>
         </div>
 
       </div>
       <div class="buttons is-flex is-justify-content-center">
-        <b-button  type="is-primary is-large">
+        <b-button 
+          type="is-primary is-large"
+          :disabled="canSave"
+          @click="saveSensed">
           {{ $t('page.SAVE') }}
         </b-button>
       </div>
@@ -68,19 +79,82 @@
 <script>
 // @ is an alias to /src
 
+// import { mapGetters } from "vuex";
+import debounce from 'lodash.debounce';
+
 export default {
   name: 'Sensing',
   components: {
   },
   data() {
     return {
+      min_input: 5,
       search: '',
       filteredTags: [],
-      selectedTags: [],
-      tags: ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333']
+      // selectedTags: [],
+      tags: ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'],
+      input: {
+        'description': '',
+        'importance': '',
+        'gap': '',
+        'value': '',
+        'selectedTags': [],
+        'attachments': false
+      }
+    }
+  },
+  ///// FROM PA-TOOL Assessment.vue
+  computed: {
+    debouncedDescription: {
+      get() {
+        return this.input.description;
+      },
+      set: debounce(function(val) {
+        this.setValue('description', val)
+      }, 500)
+    },
+    debouncedImportance: {
+      get() {
+        return this.input.importance;
+      },
+      set: debounce(function(val) {
+        this.setValue('importance', val)
+      }, 500)
+    },
+    debouncedGap: {
+      get() {
+        return this.input.gap;
+      },
+      set: debounce(function(val) {
+        this.setValue('gap', val)
+      }, 500)
+    },
+    debouncedValue: {
+      get() {
+        return this.input.value;
+      },
+      set: debounce(function(val) {
+        this.setValue('value', val)
+      }, 500)
+    },
+    canSave() {
+      let l_desc = this.input.description.length;
+      let l_imp = this.input.importance.length;
+      if(l_desc > this.min_input && l_imp > this.min_input){
+        return false
+      }
+      return true
     }
   },
   methods: {
+    saveSensed() {
+      console.log('SAVE SENSED')
+      console.log(this.input)
+    },
+    ////////// PERMANENT METHODS
+    setValue(field, val) {
+      this.input[field] = val
+    },
     getFilteredTags(text) {
       let filteredTags
       if (text) {
@@ -94,7 +168,7 @@ export default {
         filteredTags = this.tags
       }
       this.filteredTags = filteredTags.filter((option) => {
-        return this.selectedTags.indexOf(option) === -1
+        return this.input.selectedTags.indexOf(option) === -1
       })
     }
   },
