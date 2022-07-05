@@ -49,14 +49,22 @@ const actions = {
 
 // mutations
 const mutations = {
-  setAssessments (state, assessments) {
-    state.all = assessments
+  // setAssessments (state, assessments) {
+  //   state.all = assessments
+  // },
+  addSensed (state, input) {
+    let id = state.all.length
+    let sensed = defaultSensed(id)
+
+    sensed.description = input.description
+    sensed.importance = input.importance
+    sensed.gap = input.gap
+    sensed.value = input.value
+    sensed.tags = [...input.selectedTags]
+    console.log(sensed)
+    state.all.push(sensed)
   },
-  addAssessment (state, proposalId) {
-    let assessment = defaultSensed(proposalId)
-    state.all.push(assessment)
-  },
-  deleteAssessment (state, id) {
+  deleteSensed (state, id) {
     var found = state.all.filter((assessment) => assessment.id === id)
     if (found.length > 0) {
       let index = state.all.indexOf(found[0])

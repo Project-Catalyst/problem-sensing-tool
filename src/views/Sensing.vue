@@ -12,7 +12,8 @@
               type="textarea" 
               v-model="debouncedDescription"
               maxlength="35" 
-              placeholder="Insert your answer here">
+              placeholder="Insert your answer here"
+              required>
             </b-input>
           </b-field>
           <b-field><template #label>{{$t('problem.IMPORTANCE')}}</template>
@@ -20,7 +21,8 @@
               type="textarea" 
               v-model="debouncedImportance"
               maxlength="140" 
-              placeholder="Insert your answer here">
+              placeholder="Insert your answer here"
+              required>
             </b-input>
           </b-field>
           <b-field><template #label>{{$t('problem.GAP')}}</template>
@@ -79,7 +81,7 @@
 <script>
 // @ is an alias to /src
 
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import debounce from 'lodash.debounce';
 
 export default {
@@ -91,7 +93,6 @@ export default {
       min_input: 5,
       search: '',
       filteredTags: [],
-      // selectedTags: [],
       tags: ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'],
       input: {
         'description': '',
@@ -103,8 +104,8 @@ export default {
       }
     }
   },
-  ///// FROM PA-TOOL Assessment.vue
   computed: {
+    ...mapGetters("sensed", ["getById"]),
     debouncedDescription: {
       get() {
         return this.input.description;
@@ -148,8 +149,7 @@ export default {
   },
   methods: {
     saveSensed() {
-      console.log('SAVE SENSED')
-      console.log(this.input)
+      this.$store.commit('sensed/addSensed', this.input);
     },
     ////////// PERMANENT METHODS
     setValue(field, val) {
