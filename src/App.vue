@@ -10,7 +10,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'home' }">
           {{ $t('general.HOME') }}
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ name: 'sensing'}">
+        <b-navbar-item tag="router-link" :to="{ name: 'sensing', params: { id: 'empty'} }">
           {{ $t('general.START') }}
         </b-navbar-item>
         <!-- <b-navbar-item tag="router-link" :to="{ name: 'page', params: {slug: 'about'}}">

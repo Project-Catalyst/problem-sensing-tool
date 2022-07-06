@@ -94,18 +94,11 @@ export default {
       search: '',
       filteredTags: [],
       tags: ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'],
-      input: {
-        'description': '',
-        'importance': '',
-        'gap': '',
-        'value': '',
-        'selectedTags': [],
-        'attachments': false
-      }
+      input: false
     }
   },
   computed: {
-    ...mapGetters("sensed", ["getById"]),
+    ...mapGetters("sensed", ["getNewSensed", "getById"]),
     debouncedDescription: {
       get() {
         return this.input.description;
@@ -183,6 +176,17 @@ export default {
     }
   },
   mounted() {
+    console.log("MOUNTING...")
+    console.log("id: ", this.$route.params.id)
+    if (this.$route.params.id === 'empty') {
+      // (this.input) read empty default sensed
+      console.log('into empty')
+      this.input = this.getNewSensed
+      console.log(this.input)
+    } else {
+      console.log('into else')
+      this.input = this.getById(this.$route.params.id)
+    }
     this.getFilteredTags()
   }
 }

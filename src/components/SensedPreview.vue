@@ -2,14 +2,11 @@
   <div class="sensed-preview">
     <div class="columns is-multiline">
       <div class="column is-8">
-        <!-- <router-link
-          :to="{ name: 'Proposal', params: { id: proposal.id} }"> -->
-          Sensed Problem #{{sensed.id}}
-        <!-- </router-link> -->
+        Sensed Problem #{{sensed.id}}
         <div class="buttons mt-4">
           <b-button
             tag="router-link" 
-            :to="{ name: 'sensing' }"
+            :to="{ name: 'sensing', params: { id: sensed.id} }"
             size="is-small"
             icon-left="pencil"
             type="is-primary">
@@ -91,4 +88,7 @@ export default {
     &:nth-child(2n) {
     }
   }
+  // .complete-progress {
+  //   color: black !important;
+  // }
 </style>

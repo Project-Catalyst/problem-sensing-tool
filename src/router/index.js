@@ -12,7 +12,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/sensing',
+    path: '/sensing/:id',
     name: 'sensing',
     component: Sensing
   }

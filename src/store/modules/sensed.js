@@ -43,6 +43,9 @@ const getters = {
   },
   sensedCount: (state) => {
     return state.all.length
+  },
+  getNewSensed: () => {
+    return defaultSensed('empty')
   }
 }
 
