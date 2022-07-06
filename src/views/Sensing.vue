@@ -149,9 +149,19 @@ export default {
   },
   methods: {
     saveSensed() {
-      this.$store.commit('sensed/addSensed', this.input);
+      this.$buefy.dialog.confirm({
+        title: 'Save Sensed Problem',
+        message: `By confirming, you will save this problem on local storage
+                  for further editing or file download.`,
+        cancelText: 'Cancel',
+        confirmText: 'Save',
+        type: 'is-success',
+        onConfirm: () => {
+          this.$store.commit('sensed/addSensed', this.input);
+          this.$router.push({ name: "home"})
+        }
+    })
     },
-    ////////// PERMANENT METHODS
     setValue(field, val) {
       this.input[field] = val
     },

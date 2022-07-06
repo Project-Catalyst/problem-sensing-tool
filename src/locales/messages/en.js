@@ -2,7 +2,7 @@ export default {
   general: {
     HOME: "Home",
     ABOUT: "About",
-    START: "Start",
+    START: "Create new Sensed Problem",
     TITLE: "Problem Sensing Tool",
     SUBTITLE: "A plataform to share, explore and discuss Project Catalyst Problems.",
     EXPLANATION: "The <b>Problem Sensing tool</b> is designed to help in the fist step of the Proposal Process.\

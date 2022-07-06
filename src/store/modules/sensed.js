@@ -38,6 +38,9 @@ const getters = {
     }
     return false
   },
+  getAll: (state) => {
+    return state.all
+  },
   sensedCount: (state) => {
     return state.all.length
   }
