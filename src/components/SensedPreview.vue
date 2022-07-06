@@ -6,7 +6,7 @@
         <div class="buttons mt-4">
           <b-button
             tag="router-link" 
-            :to="{ name: 'sensing', params: { id: sensed.id} }"
+            :to="{ name: 'edit', params: { id: sensed.id} }"
             size="is-small"
             icon-left="pencil"
             type="is-primary">
@@ -16,7 +16,7 @@
             size="is-small"
             icon-left="delete"
             type="is-danger"
-            @click="deleteSensed">
+            @click="removeSensed">
             Delete problem
           </b-button>
         </div>
@@ -38,7 +38,7 @@
 
 <script>
 
-// import Assessment from '@/components/Assessment'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'SensedPreview',
@@ -51,9 +51,8 @@ export default {
     }
   },
   computed: {
+    ...mapGetters("sensed", ["deleteSensed"]),
     completed() {
-      console.log("COMPLETED")
-      console.log(this.sensed)
       const reducer = (previousValue, currentValue) => previousValue + currentValue;
       let fields =  ["description", "importance", "gap", "value", "tags"]
         .map((el) => (this.sensed[el].length > 0) ? 1 : 0 )
@@ -62,8 +61,19 @@ export default {
     }
   },
   methods: {
-    deleteSensed() {
+    removeSensed() {
       console.log("DELETE SENSED #", this.sensed.id)
+      this.$buefy.dialog.confirm({
+        title: 'Delete Sensed Problem',
+        message: `By confirming, you will permanently remove this problem 
+                  from you local storage. Restoring it will not be possible.`,
+        cancelText: 'Cancel',
+        confirmText: 'Delete',
+        type: 'is-danger',
+        onConfirm: () => {
+          this.$store.commit('sensed/deleteSensed', this.sensed.id);
+        }
+      })
     }
   },
   mounted() {

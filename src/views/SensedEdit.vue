@@ -1,10 +1,10 @@
 <template>
-  <div class="sensing">
+  <div class="edit">
     <section class="box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="title">{{$t('page.TITLE')}}</div>
-          <div class="subtitle" v-html="$t('page.SUBTITLE')"></div>
+          <div class="title">Sensed Problem #{{input.id}}</div>
+          <div class="subtitle" v-html="$t('page.EDIT_SUBTITLE')"></div>
         </div>
         <div class="inputs column is-12">
           <b-field><template #label>{{$t('problem.DESCRIPTION')}}</template>
@@ -67,11 +67,15 @@
 
       </div>
       <div class="buttons is-flex is-justify-content-center">
+        <b-button tag="router-link"
+          :to="{ name: 'home'}" type="is-danger is-large">
+          Cancel
+        </b-button>
         <b-button 
           type="is-primary is-large"
           :disabled="isDisabled"
-          @click="saveSensed">
-          {{ $t('page.SAVE') }}
+          @click="updateSensed">
+          Update problem
         </b-button>
       </div>
     </section>
@@ -85,7 +89,7 @@ import { mapGetters } from "vuex";
 import debounce from 'lodash.debounce';
 
 export default {
-  name: 'Sensing',
+  name: 'SensingEdit',
   components: {
   },
   data() {
@@ -150,23 +154,23 @@ export default {
     }
   },
   methods: {
-    saveSensed() {
+    updateSensed() {
       this.$buefy.dialog.confirm({
-        title: 'Save Sensed Problem',
-        message: `By confirming, you will save this problem on local storage
-                  for further editing or file download.`,
+        title: 'Update Sensed Problem',
+        message: `By confirming, the changes made in this problem cannot
+                  be undone.`,
         cancelText: 'Cancel',
-        confirmText: 'Save',
-        type: 'is-success',
+        confirmText: 'Update',
+        type: 'is-warning',
         onConfirm: () => {
-          this.$store.commit('sensed/addSensed', this.input);
+          this.$store.commit('sensed/updateSensed', this.input);
           this.clearInput()
           this.$router.push({ name: "home"})
         }
       })
     },
-    setInput() {
-      this.input = {...this.getDefaultInput}
+    loadSensed(id){
+      this.input = {...this.getById(id)}
     },
     clearInput() {
       this.input = false;
@@ -192,17 +196,9 @@ export default {
     }
   },
   mounted() {
-    console.log("MOUNTING...")
-
-    console.log('>> root this.input')
-    console.log(this.input)
-    this.setInput()
-    console.log('>> setInput this.input')
-    console.log(this.input)
-
+    this.loadSensed(this.$route.params.id)
     this.tags = ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'];
     this.getFilteredTags()
-    
   }
 }
 </script>

@@ -1,7 +1,8 @@
 // import dayjs from 'dayjs'
 // initial state
 const getDefaultState = () => ({
-  all: []
+  all: [],
+  nextId: 0
 })
 const state = getDefaultState()
 
@@ -45,6 +46,7 @@ const getters = {
     return state.all.length
   },
   getNewSensed: () => {
+    console.log(">> GETTER sensed.getNewSensed <<")
     return defaultSensed('empty')
   }
 }
@@ -58,20 +60,25 @@ const mutations = {
   // setAssessments (state, assessments) {
   //   state.all = assessments
   // },
-  addSensed (state, input) {
-    let id = state.all.length
-    let sensed = defaultSensed(id)
-
-    sensed.description = input.description
-    sensed.importance = input.importance
-    sensed.gap = input.gap
-    sensed.value = input.value
-    sensed.tags = [...input.selectedTags]
+  addSensed (state, sensed) {
+    let id = state.nextId
+    sensed.id = id
+    console.log(">> MUTATION sensed.addSensed <<")
     console.log(sensed)
     state.all.push(sensed)
+    state.nextId += 1
+  },
+  updateSensed (state, sensed) {
+    console.log(">> MUTATION sensed.updateSensed <<")
+    console.log('before')
+    console.log(state.all[sensed.id])
+    state.all[sensed.id] = sensed
+    console.log('after')
+    console.log(state.all[sensed.id])
+    
   },
   deleteSensed (state, id) {
-    var found = state.all.filter((assessment) => assessment.id === id)
+    var found = state.all.filter((sensed) => sensed.id === id)
     if (found.length > 0) {
       let index = state.all.indexOf(found[0])
       state.all.splice(index, 1)

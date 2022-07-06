@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Sensing from '@/views/Sensing.vue'
+import SensedEdit from '@/views/SensedEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -12,9 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/sensing/:id',
+    path: '/sensing',
     name: 'sensing',
     component: Sensing
+  },
+  {
+    path: '/edit/:id',
+    name: 'edit',
+    component: SensedEdit
   }
 ]
 

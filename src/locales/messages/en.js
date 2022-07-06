@@ -17,6 +17,7 @@ export default {
   page: {
     TITLE: "Insert your Sensed Problem",
     SUBTITLE: "Create a problem that you see...",
+    EDIT_SUBTITLE: "Edit your problem into a more refined description...",
     SAVE: "Save problem"
   },
   problem: {

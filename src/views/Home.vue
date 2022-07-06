@@ -12,7 +12,7 @@
       </div>
       <div class="buttons is-flex is-justify-content-center">
         <b-button tag="router-link"
-          :to="{ name: 'sensing', params: { id: 'empty'} }" type="is-primary is-large">
+          :to="{ name: 'sensing'}" type="is-primary is-large">
           {{ $t('general.START') }}
         </b-button>
       </div>
@@ -25,6 +25,9 @@
     </b-button>
     <section class="box list-problems" v-if="open">
       <div class="title">My Sensed Problems</div>
+      <div class="subtitle" v-if="sensedProblems.length === 0">
+        You haven't created any Sensed Problem yet. Let's try your first!
+      </div>
       <div class="list content">
         <sensed-preview
           :key="sensed.id"
@@ -69,15 +72,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("sensed", ["getAll"]),
+    ...mapGetters("sensed", ["getAll", "sensedCount"]),
     sensedProblems() {
       return this.getAll
     },
     openMsg() {
-      return (this.open) ? 'Close list' : 'Open my list of Sensed Problems'
+      let count = parseInt(this.sensedCount)
+      if (count === 0) {count = 'empty' }
+      return (this.open) ? 'Close list' : `Open my list of Sensed Problems (${count})`
     }
   },
   methods: {
+    clear() {
+      this.$store.commit("sensed/resetState");
+    },
     confirmClear() {
       this.$buefy.dialog.confirm({
         title: 'Clear database',
@@ -99,6 +107,11 @@ export default {
       // const localSensed = this.sensedProblems
       // downloadCsv(localSensed)
       console.log("SAVED CSV")
+    }
+  },
+  mounted() {
+    if (this.sensedProblems.length > 0) {
+      this.open = true
     }
   }
 }
