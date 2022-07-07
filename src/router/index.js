@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import Sensing from '@/views/Sensing.vue'
+import SensingForm from '@/views/SensingForm.vue'
 import SensedEdit from '@/views/SensedEdit.vue'
 
 Vue.use(VueRouter)
@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/sensing',
     name: 'sensing',
-    component: Sensing
+    component: SensingForm
   },
   {
     path: '/edit/:id',

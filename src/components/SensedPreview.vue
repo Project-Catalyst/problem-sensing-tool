@@ -43,9 +43,6 @@ import { mapGetters } from "vuex";
 export default {
   name: 'SensedPreview',
   props: ['sensed'],
-  // components: {
-  //   // Assessment
-  // },
   data() {
     return {
     }
@@ -62,7 +59,6 @@ export default {
   },
   methods: {
     removeSensed() {
-      console.log("DELETE SENSED #", this.sensed.id)
       this.$buefy.dialog.confirm({
         title: 'Delete Sensed Problem',
         message: `By confirming, you will permanently remove this problem 
@@ -98,7 +94,4 @@ export default {
     &:nth-child(2n) {
     }
   }
-  // .complete-progress {
-  //   color: black !important;
-  // }
 </style>

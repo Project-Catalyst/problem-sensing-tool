@@ -85,7 +85,7 @@
 <script>
 // @ is an alias to /src
 
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import debounce from 'lodash.debounce';
 
 export default {
@@ -102,10 +102,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("sensed", ["getNewSensed", "getById"]),
-    getDefaultInput() {
-      // return this.$store.getters.getNewSensed
-      return this.getNewSensed;
+    ...mapState({
+      allSensed: (state) => state.sensed.all
+    }),
+    sensed() {
+      let id = parseInt(this.$route.params.id)
+      var found = this.allSensed.filter((sensed) => sensed.id === id)
+      if (found.length > 0) {
+        let index = this.allSensed.indexOf(found[0])
+        return this.allSensed[index]
+      }
+      return false
     },
     debouncedDescription: {
       get() {
@@ -169,9 +176,6 @@ export default {
         }
       })
     },
-    loadSensed(id){
-      this.input = {...this.getById(id)}
-    },
     clearInput() {
       this.input = false;
     },
@@ -196,7 +200,7 @@ export default {
     }
   },
   mounted() {
-    this.loadSensed(this.$route.params.id)
+    this.input = {...this.sensed}
     this.tags = ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'];
     this.getFilteredTags()
   }

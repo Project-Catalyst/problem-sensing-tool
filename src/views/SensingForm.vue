@@ -67,6 +67,10 @@
 
       </div>
       <div class="buttons is-flex is-justify-content-center">
+        <b-button tag="router-link"
+          :to="{ name: 'home'}" type="is-danger is-large">
+          Cancel
+        </b-button>
         <b-button 
           type="is-primary is-large"
           :disabled="isDisabled"
@@ -85,7 +89,7 @@ import { mapGetters } from "vuex";
 import debounce from 'lodash.debounce';
 
 export default {
-  name: 'Sensing',
+  name: 'SensingForm',
   components: {
   },
   data() {
@@ -98,11 +102,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("sensed", ["getNewSensed", "getById"]),
-    getDefaultInput() {
-      // return this.$store.getters.getNewSensed
-      return this.getNewSensed;
-    },
+    ...mapGetters("sensed", ["getNewSensed"]),
     debouncedDescription: {
       get() {
         return this.input.description;
@@ -165,9 +165,6 @@ export default {
         }
       })
     },
-    setInput() {
-      this.input = {...this.getDefaultInput}
-    },
     clearInput() {
       this.input = false;
     },
@@ -192,17 +189,9 @@ export default {
     }
   },
   mounted() {
-    console.log("MOUNTING...")
-
-    console.log('>> root this.input')
-    console.log(this.input)
-    this.setInput()
-    console.log('>> setInput this.input')
-    console.log(this.input)
-
+    this.input = {...this.getNewSensed}
     this.tags = ['Tag1', 'Tag11', 'Tag111', 'Tag2', 'Tag22', 'Tag222', 'Tag3', 'Tag33', 'Tag333'];
     this.getFilteredTags()
-    
   }
 }
 </script>

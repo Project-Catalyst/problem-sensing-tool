@@ -1,4 +1,3 @@
-// import dayjs from 'dayjs'
 // initial state
 const getDefaultState = () => ({
   all: [],
@@ -18,8 +17,6 @@ const defaultSensed = (id) => {
     attachments: false
   }
 }
-
-///// below here comes from pa-tool assessments.js
 
 // getters
 const getters = {
@@ -46,7 +43,6 @@ const getters = {
     return state.all.length
   },
   getNewSensed: () => {
-    console.log(">> GETTER sensed.getNewSensed <<")
     return defaultSensed('empty')
   }
 }
@@ -57,25 +53,18 @@ const actions = {
 
 // mutations
 const mutations = {
-  // setAssessments (state, assessments) {
-  //   state.all = assessments
-  // },
   addSensed (state, sensed) {
     let id = state.nextId
     sensed.id = id
-    console.log(">> MUTATION sensed.addSensed <<")
-    console.log(sensed)
     state.all.push(sensed)
     state.nextId += 1
   },
-  updateSensed (state, sensed) {
-    console.log(">> MUTATION sensed.updateSensed <<")
-    console.log('before')
-    console.log(state.all[sensed.id])
-    state.all[sensed.id] = sensed
-    console.log('after')
-    console.log(state.all[sensed.id])
-    
+  updateSensed (state, update) {
+    var found = state.all.filter((sensed) => sensed.id === update.id)
+    if (found.length > 0) {
+      let index = state.all.indexOf(found[0])
+      state.all[index] = update
+    }
   },
   deleteSensed (state, id) {
     var found = state.all.filter((sensed) => sensed.id === id)
@@ -88,13 +77,9 @@ const mutations = {
     let assessment = state.all.find(a => parseInt(a.id) === parseInt(data.id));
     if (assessment) {
       assessment[data.field] = data.value
-      // assessment.last_update = dayjs().unix()
     }
   },
   resetState (state) {
-    //state.currentIndex = 0
-    //state.keyword = ''
-    //state.selectedChallenges = []
     Object.assign(state, getDefaultState())
   }
 }
