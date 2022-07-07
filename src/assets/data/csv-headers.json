@@ -1,0 +1,30 @@
+{
+  "id": {
+    "type": "integer",
+    "label": "id"
+  },
+  "description": {
+    "type": "string",
+    "label": "Description"
+  },
+  "importance": {
+    "type": "string",
+    "label": "Importance"
+  },
+  "gap": {
+    "type": "string",
+    "label": "Gap"
+  },
+  "value": {
+    "type": "string",
+    "label": "Value"
+  },
+  "tags": {
+    "type": "string",
+    "label": "Tags"
+  },
+  "attachments": {
+    "type": "boolean",
+    "label": "Attachments"
+  }
+}

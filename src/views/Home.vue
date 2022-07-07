@@ -59,7 +59,7 @@
 import { mapGetters } from "vuex";
 import SensedPreview from '@/components/SensedPreview'
 
-// import downloadCsv from "@/utils/export-csv";
+import downloadCsv from "@/utils/export-csv";
 
 export default {
   name: 'Home',
@@ -104,8 +104,8 @@ export default {
       })
     },
     exportSensed() {
-      // const localSensed = this.sensedProblems
-      // downloadCsv(localSensed)
+      const localSensed = this.sensedProblems
+      downloadCsv(localSensed)
       console.log("SAVED CSV")
     }
   },
