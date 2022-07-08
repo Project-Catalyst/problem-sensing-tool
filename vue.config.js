@@ -1,11 +1,11 @@
 let publicPath = ''
-if (process.env.APP_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   publicPath = '/problem-sensing-tool/'
 }
-if (process.env.APP_ENV === 'staging') {
+if (process.env.NODE_ENV === 'staging') {
   publicPath = '/'
 }
-if (process.env.APP_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   publicPath = '/'
 }
 module.exports = {
